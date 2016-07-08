@@ -18,25 +18,17 @@
 	<bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
 		init-method="init">
 	</bean>
-	<!-- 使用托管方式的disconf配置(无代码侵入, 配置更改不会自动reload) -->
-	<bean id="configproperties_no_reloadable_disconf"
-		class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
-		<property name="locations">
-			<list>
-				<value>classpath:/redis.properties</value>
-			</list>
-		</property>
-	</bean>
-
+	
 	<bean id="propertyConfigurerForProject1"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
-		<property name="propertiesArray">
+		<property name="locations">
 			<list>
-				<ref bean="configproperties_no_reloadable_disconf" />
+				<value>classpath*:/redis.properties</value>
 			</list>
 		</property>
 	</bean>
-
 </beans>
