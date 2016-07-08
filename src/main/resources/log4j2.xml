@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration name="web-for-analysis" status="WARN"
+	monitorInterval="60">
+	<Properties>
+		<Property name="logsFilePath">logs</Property>
+		<Property name="logsDir">${logsFilePath}</Property>
+		<Property name="all">all</Property>
+		<Property name="fileSuffix">log</Property>
+		<Property name="rolloverFileSuffix">log</Property>
+	</Properties>
+	<Appenders>
+		<Console name="consoleAppender" target="SYSTEM_OUT">
+			<ThresholdFilter level="DEBUG" />
+			<PatternLayout pattern="%d [%-5p][%t][%C.%M()#%L] - %m%n" />
+		</Console>
+		<RollingRandomAccessFile name="allAppender"
+			fileName="${logsFilePath}/${all}.${fileSuffix}"
+			filePattern="${logsFilePath}/${all}-%d{yyyy-MM-dd-HH}-%i.${rolloverFileSuffix}">
+			<ThresholdFilter level="DEBUG" />
+			<PatternLayout pattern="%d [%-5p][%t][%C.%M()#%L] - %m%n"
+				charset="UTF-8" />
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"
+					interval="1" />
+				<SizeBasedTriggeringPolicy size="500 MB" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<Async name="allAsyncAppender" includeLocation="true">
+			<AppenderRef ref="allAppender" />
+		</Async>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.apache.zookeeper" level="error" />
+		<Logger name="org.springframework" level="warn" />
+		<Root level="info" includeLocation="true">
+			<AppenderRef ref="consoleAppender" />
+			<AppenderRef ref="allAsyncAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
