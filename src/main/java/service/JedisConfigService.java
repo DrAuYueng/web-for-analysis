@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JedisConfigService {
-    @Value("${redis.ip}")
+    @Value("${redis.host}")
     private String ip;
     @Value("${redis.port}")
     private Integer port;
