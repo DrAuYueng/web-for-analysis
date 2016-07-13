@@ -34,7 +34,7 @@
 	<Loggers>
 		<Logger name="org.apache.zookeeper" level="error" />
 		<Logger name="org.springframework" level="warn" />
-		<Root level="info" includeLocation="true">
+		<Root level="debug" includeLocation="true">
 			<AppenderRef ref="consoleAppender" />
 			<AppenderRef ref="allAsyncAppender" />
 		</Root>
