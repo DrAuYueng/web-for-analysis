@@ -29,16 +29,10 @@
 		</property>
 	</bean>
 
-	<bean id="propertyConfigurerForProject1"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-		<property name="propertiesArray">
-			<list>
-				<ref bean="configproperties_disconf" />
-			</list>
-		</property>
-	</bean>
+	<!-- <bean id="propertyConfigurerForProject1" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+		<property name="ignoreResourceNotFound" value="true" /> <property name="ignoreUnresolvablePlaceholders" 
+		value="true" /> <property name="propertiesArray"> <list> <ref bean="configproperties_no_reloadable_disconf" 
+		/> </list> </property> </bean> -->
 
 	<!-- <bean id="propertyConfigurer" class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer"> 
 		<property name="ignoreResourceNotFound" value="true" /> <property name="ignoreUnresolvablePlaceholders" 
@@ -46,7 +40,7 @@
 		/> </list> </property> </bean> -->
 
 
-	<!-- <bean id="propertyConfigurer"
+	<bean id="propertyConfigurer"
 		class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
@@ -55,5 +49,5 @@
 				<ref bean="configproperties_disconf" />
 			</list>
 		</property>
-	</bean> -->
+	</bean>
 </beans>

@@ -9,7 +9,8 @@ public class ConfigTest {
 
         System.out.println("    Loading spring Demo...");
         final GenericXmlApplicationContext applicationContext = new GenericXmlApplicationContext(configFilesChannelAdapterDemo);
-        applicationContext.setParent(new GenericXmlApplicationContext("/beanRefContext.xml"));
+        // applicationContext.setParent(new
+        // GenericXmlApplicationContext("/beanRefContext.xml"));
         Thread.sleep(50000000l);
     }
 }
