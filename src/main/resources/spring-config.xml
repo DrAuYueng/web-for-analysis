@@ -10,7 +10,7 @@
 	http://www.acm.com/schema/bootstrap/bootstrap.xsd">
 	<context:annotation-config />
 	<context:component-scan base-package="service" />
-    <bootstrap:bean/>
+    <bootstrap:enable-bootstrap/>
 
 	<!-- 使用disconf必须添加以下配置 -->
 	<bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean">

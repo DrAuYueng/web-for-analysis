@@ -7,7 +7,7 @@
         attributeFormDefault="unqualified">
     <xsd:import namespace="http://www.springframework.org/schema/beans"/>
     
-    <xsd:element name="bean">
+    <xsd:element name="enable-bootstrap">
         <xsd:complexType>
             <xsd:complexContent>
                 <xsd:extension base="beans:identifiedType">

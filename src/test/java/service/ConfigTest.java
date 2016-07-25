@@ -9,6 +9,8 @@ public class ConfigTest {
 
         System.out.println("    Loading spring Demo...");
         final GenericXmlApplicationContext applicationContext = new GenericXmlApplicationContext(configFilesChannelAdapterDemo);
+        JedisConfigService service = applicationContext.getBean(JedisConfigService.class);
+        System.out.println("ip:" + service.getIp() + ",port:" + service.getPort());
         // applicationContext.setParent(new
         // GenericXmlApplicationContext("/beanRefContext.xml"));
         Thread.sleep(50000000l);
