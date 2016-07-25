@@ -1,36 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.acm.com/schema/bootstrap"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:beans="http://www.springframework.org/schema/beans"
-        targetNamespace="http://www.acm.com/schema/bootstrap"
-        elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
-    <xsd:import namespace="http://www.springframework.org/schema/beans"/>
-    
-    <xsd:element name="enable-bootstrap">
-        <xsd:complexType>
-            <xsd:complexContent>
-                <xsd:extension base="beans:identifiedType">
-                    <xsd:attribute name="class" type="xsd:string" />
-                    <xsd:attribute name="regCenter" type="xsd:string" />
-                    <xsd:attribute name="cron" type="xsd:string" />
-                    <xsd:attribute name="shardingTotalCount" type="xsd:string" />
-                    <xsd:attribute name="shardingItemParameters" type="xsd:string" />
-                    <xsd:attribute name="jobParameter" type="xsd:string" />
-                    <xsd:attribute name="monitorExecution" type="xsd:string" />
-                    <xsd:attribute name="monitorPort" type="xsd:string" />
-                    <xsd:attribute name="processCountIntervalSeconds" type="xsd:string" />
-                    <xsd:attribute name="concurrentDataProcessThreadCount" type="xsd:string" />
-                    <xsd:attribute name="fetchDataCount" type="xsd:string" />
-                    <xsd:attribute name="maxTimeDiffSeconds" type="xsd:string" />
-                    <xsd:attribute name="failover" type="xsd:string" />
-                    <xsd:attribute name="misfire" type="xsd:string" />
-                    <xsd:attribute name="jobShardingStrategyClass" type="xsd:string" />
-                    <xsd:attribute name="description" type="xsd:string" />
-                    <xsd:attribute name="disabled" type="xsd:string" />
-                    <xsd:attribute name="overwrite" type="xsd:string" />
-                </xsd:extension>
-            </xsd:complexContent>
-        </xsd:complexType>
-    </xsd:element>
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.acm.com/schema/bootstrap"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:element name="enable-bootstrap" />
 </xsd:schema>

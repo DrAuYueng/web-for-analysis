@@ -1,0 +1,3 @@
+# Bootstrap components
+com.acm.bootstrap.BootstrapConfiguration=\
+com.acm.bootstrap.demo.DemoBootstrapConfiguration
