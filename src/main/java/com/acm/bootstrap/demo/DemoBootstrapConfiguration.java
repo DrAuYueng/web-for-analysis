@@ -1,10 +1,14 @@
 package com.acm.bootstrap.demo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertySource;
 
 import service.MessageQueueConfigService;
 
@@ -21,9 +25,18 @@ public class DemoBootstrapConfiguration implements EnvironmentInitializer {
     public void initializeEnvironment(Environment env) {
         if (env instanceof ConfigurableEnvironment) {
             MutablePropertySources mps = ((ConfigurableEnvironment) env).getPropertySources();
-            System.out.println(mps);
+            Map<String, Object> map = new HashMap<String, Object>();
+
+            PropertySource<Map<String, Object>> ps = new PropertySource<Map<String, Object>>("demoMap", map) {
+
+                @Override
+                public Object getProperty(String name) {
+                    return source.get(name);
+                }
+            };
+
+            mps.addAfter("demoPs", ps);
         }
-        String[] profiles = env.getActiveProfiles();
-        System.out.println(profiles);
+
     }
 }
