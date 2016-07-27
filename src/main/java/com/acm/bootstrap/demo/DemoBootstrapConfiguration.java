@@ -3,6 +3,8 @@ package com.acm.bootstrap.demo;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.acm.bootstrap.condition.ConditionalOnMissingBean;
+import com.acm.bootstrap.condition.SearchStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -18,6 +20,7 @@ import com.acm.bootstrap.EnvironmentInitializer;
 public class DemoBootstrapConfiguration implements EnvironmentInitializer {
 
     @Bean
+    @ConditionalOnMissingBean(search = SearchStrategy.CURRENT)
     public MessageQueueConfigService messageQueueConfigService() {
         return new MessageQueueConfigService();
     }

@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.core.io.support.SpringFactoriesLoader;
@@ -18,10 +20,14 @@ import org.w3c.dom.Element;
  * Created by lion on 16/7/24.
  */
 public class BootstrapBeanDefinitionParser extends AbstractSingleBeanDefinitionParser {
-    /** Constant for the id attribute */
+    /**
+     * Constant for the id attribute
+     */
     public static final String ID_ATTRIBUTE = "id";
 
-    /** Constant for the name attribute */
+    /**
+     * Constant for the name attribute
+     */
     public static final String NAME_ATTRIBUTE = "name";
 
     public static final String ID_DEFAULT = BootstrapConfigurer.class + ".id";
@@ -50,6 +56,18 @@ public class BootstrapBeanDefinitionParser extends AbstractSingleBeanDefinitionP
         List<EnvironmentInitializer> list = getOrderedBeansOfType(bootstrapContext, EnvironmentInitializer.class);
         for (EnvironmentInitializer initializer : list) {
             initializer.initializeEnvironment(parserContext.getDelegate().getReaderContext().getEnvironment());
+        }
+        BeanDefinitionRegistry registry = parserContext.getRegistry();
+        //set parent context if necessary
+        if(registry instanceof ConfigurableApplicationContext){
+
+            ConfigurableApplicationContext context=(ConfigurableApplicationContext) registry;
+            while(context.getParent()!=null){
+                context=(ConfigurableApplicationContext)context.getParent();
+            }
+
+            context.setParent(bootstrapContext);
+
         }
         super.doParse(element, parserContext, builder);
     }
