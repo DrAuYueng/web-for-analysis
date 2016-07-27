@@ -43,12 +43,10 @@ public class OnBeanCondition extends SpringBootCondition implements Configuratio
      */
     public static final String FACTORY_BEAN_OBJECT_TYPE = BeanTypeRegistry.FACTORY_BEAN_OBJECT_TYPE;
 
-    @Override
     public ConfigurationPhase getConfigurationPhase() {
         return ConfigurationPhase.REGISTER_BEAN;
     }
 
-    @Override
     public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
         StringBuffer matchMessage = new StringBuffer();
         if (metadata.isAnnotated(ConditionalOnBean.class.getName())) {
@@ -212,7 +210,6 @@ public class OnBeanCondition extends SpringBootCondition implements Configuratio
                 // REGISTER_BEAN phase
                 Class<?> configClass = ClassUtils.forName(methodMetadata.getDeclaringClassName(), context.getClassLoader());
                 ReflectionUtils.doWithMethods(configClass, new MethodCallback() {
-                    @Override
                     public void doWith(Method method) throws IllegalArgumentException, IllegalAccessException {
                         if (methodMetadata.getMethodName().equals(method.getName())) {
                             beanTypes.add(method.getReturnType().getName());

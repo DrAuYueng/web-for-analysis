@@ -12,8 +12,9 @@ public class ConfigTest {
         JedisConfigService service = applicationContext.getBean(JedisConfigService.class);
         System.out.println("ip:" + service.getIp() + ",port:" + service.getPort());
 
-        MessageQueueConfigService messageConfigService = applicationContext.getBean(MessageQueueConfigService.class);
-        System.out.println(messageConfigService);
+        // MessageQueueConfigService messageConfigService =
+        // applicationContext.getBean(MessageQueueConfigService.class);
+        // System.out.println(messageConfigService);
         // applicationContext.setParent(new
         // GenericXmlApplicationContext("/beanRefContext.xml"));
         Thread.sleep(50000000l);
