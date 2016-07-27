@@ -26,7 +26,7 @@ public class DemoBootstrapConfiguration implements EnvironmentInitializer {
         if (env instanceof ConfigurableEnvironment) {
             MutablePropertySources mps = ((ConfigurableEnvironment) env).getPropertySources();
             Map<String, Object> map = new HashMap<String, Object>();
-
+            map.put("config.port",8080);
             PropertySource<Map<String, Object>> ps = new PropertySource<Map<String, Object>>("demoMap", map) {
 
                 @Override
@@ -35,7 +35,7 @@ public class DemoBootstrapConfiguration implements EnvironmentInitializer {
                 }
             };
 
-            mps.addAfter("demoPs", ps);
+            mps.addFirst(ps);
         }
 
     }
