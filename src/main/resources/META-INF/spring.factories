@@ -1,3 +1,13 @@
 # Bootstrap components
 com.acm.bootstrap.BootstrapConfiguration=\
 com.acm.bootstrap.demo.DemoBootstrapConfiguration
+
+
+
+# Bootstrap Listener
+com.acm.bootstrap.BootstrapListener=\
+com.acm.bootstrap.BootstrapConfigFileListener
+
+# Bootstrap PropertySources Loader
+com.acm.bootstrap.PropertySourceLoader=\
+com.acm.bootstrap.PropertiesPropertySourceLoader

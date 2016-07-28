@@ -8,9 +8,13 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
@@ -34,6 +38,8 @@ public class BootstrapBeanDefinitionParser extends AbstractSingleBeanDefinitionP
 
     public static final String NAME_DEFAULT = BootstrapConfigurer.class + ".name";
 
+    private ConfigurableEnvironment defaultParentEnvironment;
+
     @Override
     protected Class<?> getBeanClass(Element element) {
         return BootstrapConfigurer.class;
@@ -52,18 +58,28 @@ public class BootstrapBeanDefinitionParser extends AbstractSingleBeanDefinitionP
             element.setAttribute(NAME_ATTRIBUTE, NAME_DEFAULT);
         }
 
-        AnnotationConfigApplicationContext bootstrapContext = new AnnotationConfigApplicationContext(findSource());
+        ConfigurableEnvironment environment = getOrCreateEnvironment();
+        // environment prepared,fire the listeners
+        for (BootstrapListener listener : getListeners()) {
+            listener.environmentPrepared(environment);
+        }
+
+        AnnotationConfigApplicationContext bootstrapContext = new AnnotationConfigApplicationContext();
+        bootstrapContext.setEnvironment(environment);
+        BeanDefinitionLoader loader = new BeanDefinitionLoader(getBeanDefinitionRegistry(bootstrapContext), findSource());
+        loader.load();
+        bootstrapContext.refresh();
         List<EnvironmentInitializer> list = getOrderedBeansOfType(bootstrapContext, EnvironmentInitializer.class);
         for (EnvironmentInitializer initializer : list) {
             initializer.initializeEnvironment(parserContext.getDelegate().getReaderContext().getEnvironment());
         }
         BeanDefinitionRegistry registry = parserContext.getRegistry();
-        //set parent context if necessary
-        if(registry instanceof ConfigurableApplicationContext){
+        // set parent context if necessary
+        if (registry instanceof ConfigurableApplicationContext) {
 
-            ConfigurableApplicationContext context=(ConfigurableApplicationContext) registry;
-            while(context.getParent()!=null){
-                context=(ConfigurableApplicationContext)context.getParent();
+            ConfigurableApplicationContext context = (ConfigurableApplicationContext) registry;
+            while (context.getParent() != null) {
+                context = (ConfigurableApplicationContext) context.getParent();
             }
 
             context.setParent(bootstrapContext);
@@ -72,7 +88,14 @@ public class BootstrapBeanDefinitionParser extends AbstractSingleBeanDefinitionP
         super.doParse(element, parserContext, builder);
     }
 
-    private Class<?>[] findSource() {
+    private ConfigurableEnvironment getOrCreateEnvironment() {
+        if (this.defaultParentEnvironment != null) {
+            return defaultParentEnvironment;
+        }
+        return new StandardEnvironment();
+    }
+
+    private Object[] findSource() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         // Use names and ensure unique to protect against duplicates
         List<String> names = SpringFactoriesLoader.loadFactoryNames(BootstrapConfiguration.class, classLoader);
@@ -96,5 +119,19 @@ public class BootstrapBeanDefinitionParser extends AbstractSingleBeanDefinitionP
         }
         AnnotationAwareOrderComparator.sort(result);
         return result;
+    }
+
+    private List<BootstrapListener> getListeners() {
+        return SpringFactoriesLoader.loadFactories(BootstrapListener.class, null);
+    }
+
+    private BeanDefinitionRegistry getBeanDefinitionRegistry(ApplicationContext context) {
+        if (context instanceof BeanDefinitionRegistry) {
+            return (BeanDefinitionRegistry) context;
+        }
+        if (context instanceof AbstractApplicationContext) {
+            return (BeanDefinitionRegistry) ((AbstractApplicationContext) context).getBeanFactory();
+        }
+        throw new IllegalStateException("Could not locate BeanDefinitionRegistry");
     }
 }
