@@ -1,10 +1,14 @@
 package service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JedisConfigService {
+
+    @Autowired
+    private JedisConfig config;
     @Value("${redis.host}")
     private String ip;
     @Value("${redis.port}")
@@ -24,6 +28,10 @@ public class JedisConfigService {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public void printConfig() {
+        System.out.println(config);
     }
 
 }

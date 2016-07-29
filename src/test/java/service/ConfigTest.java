@@ -11,6 +11,7 @@ public class ConfigTest {
         final GenericXmlApplicationContext applicationContext = new GenericXmlApplicationContext(configFilesChannelAdapterDemo);
         JedisConfigService service = applicationContext.getBean(JedisConfigService.class);
         System.out.println("ip:" + service.getIp() + ",port:" + service.getPort());
+        service.printConfig();
 
         // MessageQueueConfigService messageConfigService =
         // applicationContext.getBean(MessageQueueConfigService.class);
