@@ -1,5 +1,8 @@
-package com.acm.bootstrap.demo;
+package com.acm.normal.configuration;
 
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,17 +15,18 @@ import com.baidu.disconf.client.DisconfMgrBeanSecond;
 import com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean;
 
 @Configuration
-@EnableConfigurationProperties
 @ConditionalOnProperty(value = "config.disconf.enable", matchIfMissing = false)
-public class DisconfBootstrapConfiguration {
-    @Bean
-    public DisconfConfig disconfConfig() {
-        return new DisconfConfig();
-    }
+@EnableConfigurationProperties
+public class DisconfConfiguration {
+
+    @Autowired
+    private DisconfConfig disconfConfig;
 
     @Bean
-    public DisconfMgrBean disconfMgrBean() {
-        return new DisconfMgrBean();
+    public DisconfMgrBean disconfMgrBean(DisconfConfig disconfConfig) {
+        DisconfMgrBean mgrBean = new DisconfMgrBean();
+        mgrBean.setScanPackage("foo");
+        return mgrBean;
     }
 
     @Bean
@@ -32,8 +36,9 @@ public class DisconfBootstrapConfiguration {
 
     @Bean
     public ReloadablePropertiesFactoryBean reloadablePropertiesFactoryBean() {
-        ReloadablePropertiesFactoryBean factoryBean = reloadablePropertiesFactoryBean();
-        factoryBean.setLocations(disconfConfig().getLocations());
+        ReloadablePropertiesFactoryBean factoryBean = new ReloadablePropertiesFactoryBean();
+        factoryBean.setLocations(Arrays.asList(new String[] { "redis.properties" }));
         return factoryBean;
     }
+
 }

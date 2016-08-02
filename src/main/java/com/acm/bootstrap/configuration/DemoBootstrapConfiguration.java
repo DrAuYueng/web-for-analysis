@@ -1,4 +1,4 @@
-package com.acm.bootstrap.demo;
+package com.acm.bootstrap.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +16,7 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 
 import service.JedisConfig;
+import service.JedisConfigService;
 import service.MessageQueueConfigService;
 
 import com.acm.bootstrap.EnvironmentInitializer;
@@ -28,6 +29,11 @@ public class DemoBootstrapConfiguration implements EnvironmentInitializer {
     @ConditionalOnMissingBean(search = SearchStrategy.CURRENT)
     public MessageQueueConfigService messageQueueConfigService() {
         return new MessageQueueConfigService();
+    }
+
+    @Bean
+    public JedisConfigService jedisConfigService() {
+        return new JedisConfigService();
     }
 
     @Bean

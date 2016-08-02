@@ -1,8 +1,6 @@
 # Bootstrap components
 com.acm.bootstrap.BootstrapConfiguration=\
-com.acm.bootstrap.demo.DemoBootstrapConfiguration
-
-
+com.acm.bootstrap.demo.DemoBootstrapConfiguration,com.acm.bootstrap.demo.DisconfBootstrapConfiguration
 
 # Bootstrap Listener
 com.acm.bootstrap.BootstrapListener=\

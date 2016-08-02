@@ -1,4 +1,4 @@
-package com.acm.bootstrap.demo;
+package com.acm.bootstrap.configuration;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SearchStrategy;
