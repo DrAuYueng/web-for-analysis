@@ -9,9 +9,9 @@ public class ConfigTest {
 
         System.out.println("    Loading spring Demo...");
         final GenericXmlApplicationContext applicationContext = new GenericXmlApplicationContext(configFilesChannelAdapterDemo);
-        JedisConfigService service = applicationContext.getBean(JedisConfigService.class);
-        System.out.println("ip:" + service.getIp() + ",port:" + service.getPort());
-        service.printConfig();
+        DisconfConfig config = applicationContext.getBean(DisconfConfig.class);
+        System.out.println(config);
+        System.out.println(applicationContext.getEnvironment());
 
         // MessageQueueConfigService messageConfigService =
         // applicationContext.getBean(MessageQueueConfigService.class);

@@ -1,5 +1,7 @@
 package service;
 
+import java.util.Arrays;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("config.disconf")
@@ -21,6 +23,12 @@ public class DisconfConfig {
 
     public void setScanPackageList(String[] scanPackageList) {
         this.scanPackageList = scanPackageList;
+    }
+
+    @Override
+    public String toString() {
+        return "DisconfConfig [scanPackageList=" + Arrays.toString(scanPackageList) + ", locations=" + Arrays.toString(locations)
+                + "]";
     }
 
 }
