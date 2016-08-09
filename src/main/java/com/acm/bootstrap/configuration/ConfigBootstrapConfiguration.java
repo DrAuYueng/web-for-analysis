@@ -44,6 +44,7 @@ public class ConfigBootstrapConfiguration implements EnvironmentInitializer {
         public DisconfAspectJ disconfAspectJ() {
             return new DisconfAspectJ();
         }
+
     }
 
     // @Bean

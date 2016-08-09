@@ -2,6 +2,10 @@
 com.acm.bootstrap.BootstrapConfiguration=\
 com.acm.bootstrap.configuration.ConfigBootstrapConfiguration
 
+# Normal components
+com.acm.bootstrap.NormalConfiguration=\
+com.acm.bootstrap.configuration.ConfigNormalConfiguration
+
 # Bootstrap Listener
 com.acm.bootstrap.BootstrapListener=\
 com.acm.bootstrap.BootstrapConfigFileListener
